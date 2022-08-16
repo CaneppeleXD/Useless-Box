@@ -1,19 +1,24 @@
 #include <VarSpeedServo.h>
 
+//usar o fio branco
+
 VarSpeedServo servo; 
 
-int alavanca = 5;
+int alavanca = 3;
 int indice = 1;
 int valor = 1;
-
+int inicio = 180;
+int final = 80;
 void setup()
 {
   pinMode(alavanca, INPUT);
   servo.attach(3);
-  servo.write(180*indice);
+  servo.write(inicio*indice);
+  Serial.begin(9600);
 }
 void loop()
 {
+  Serial.println(valor);
   if (digitalRead(alavanca) == HIGH) { //define reacoes
     valor = random(1, 3 + 1);
     if (valor > 3); // testar sem esse
@@ -38,14 +43,14 @@ void loop()
 
 void reacao1()
 {
-  servo.write(80*indice, 200, true);
+  servo.write(final*indice, 200, true);
   delay(1000);
-  servo.write(180*indice, 60, true);
+  servo.write(inicio*indice, 60, true);
 }
 void reacao2()
 {
-  servo.write(80*indice, 200, true);
-  for(int angulo = 0;angulo < 180; angulo++){
+  servo.write(final*indice, 200, true);
+  for(int angulo = 0;angulo < inicio; angulo++){
     servo.write(angulo*indice);
     delay(50);  
   }
@@ -55,7 +60,7 @@ void reacao3()
   servo.write(140*indice, 210, true);
   delay(100);
   servo.write(100*indice, 20, true);
-  servo.write(80*indice, 200, true);
+  servo.write(final*indice, 200, true);
   delay(50);
-  servo.write(180*indice, 200, true);
+  servo.write(inicio*indice, 200, true);
 } //é possível colocar mais reaç
